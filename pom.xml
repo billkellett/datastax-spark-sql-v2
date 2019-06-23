@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<url>http://maven.apache.org</url>
+	
+    <!-- above is all boilerplate
+        
+		NOTE that I generated my base pom and project directory structure with the following maven command (run from 
+		the directory ABOVE where you want the project to be created... e.g. /maven):
+        mvn archetype:generate -DgroupId=com.datastax.kellett -DartifactId=datastax-spark-sql-v2 -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+
+        The junit dependency was created automatically for me, but I pasted in the other dependencies (if needed)
+        and the <repositories> section (if needed) and the <properties> section (if needed)
+		and the <build> section all BEFORE importing the project into IntelliJ.  
+		I imported by pointing to the datastax-spark-sql-v2 directory, and imported as Maven project.
+    -->	
+	
+	<groupId>com.datastax.kellett</groupId>
+	<artifactId>datastax-spark-sql-v2</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+	<name>datastax-spark-sql-v2</name>
+
+	<properties> <!-- Not currently used, but we keep them as doc and for possible future use -->
+		<java.version>1.8</java.version>
+		<dse.version>6.0.7</dse.version>
+        <scala.version>2.11.8</scala.version>
+	</properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-sql_2.11</artifactId> <!-- 2.11 is Scala version used to build Spark -->
+            <version>2.3.2</version>  				<!-- this number refers to the Spark version -->
+        </dependency>  <!--see https://spark.apache.org/downloads.html to get latest info for both of the above -->
+	</dependencies>
+
+
+    <build>
+        <finalName>datastax-spark-sql-v2</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>create-my-bundle</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <repositories>
+        <repository>
+            <id>DataStax-Repo</id>
+            <url>https://datastax.artifactoryonline.com/datastax/public-repos/</url>
+        </repository>
+    </repositories>
+
+</project>
